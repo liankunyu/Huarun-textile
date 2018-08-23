@@ -1,0 +1,625 @@
+unit bgy;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters,
+  cxContainer, cxEdit, dxSkinsCore, dxSkinsDefaultPainters, cxStyles,
+  dxSkinscxPCPainter, cxCustomData, cxFilter, cxData, cxDataStorage, DB,
+  cxDBData, cxLabel, cxTextEdit, RzButton, cxGridLevel,
+  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxClasses,
+  cxGridCustomView, cxGrid, cxMaskEdit, cxDropDownEdit, cxLookupEdit,
+  cxDBLookupEdit, cxDBLookupComboBox, StdCtrls, Mask, RzEdit, RzLabel,
+  RzPanel, ExtCtrls, ImgList, cxCalc, cxBlobEdit,IniFiles,
+  cxGridBandedTableView, cxGridDBBandedTableView, cxCheckBox, RzRadGrp,
+  cxPC, dxSkinBlack, dxSkinBlue, dxSkinCaramel, dxSkinCoffee,
+  dxSkinDarkRoom, dxSkinDarkSide, dxSkinFoggy, dxSkinGlassOceans,
+  dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky,
+  dxSkinMcSkin, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinPumpkin, dxSkinSeven, dxSkinSharp,
+  dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
+  dxSkinValentine, dxSkinXmas2008Blue;
+
+type
+  TFrmBGY = class(TForm)
+    rzpnl1: TRzPanel;
+    rzpnlBtns: TRzPanel;
+    btnAdd: TRzToolButton;
+    btnExit: TRzToolButton;
+    cxStyleRepository1: TcxStyleRepository;
+    cxstyl2: TcxStyle;
+    cxstyl3: TcxStyle;
+    btnQuery: TRzToolButton;
+    btnModify: TRzToolButton;
+    cxstyl1: TcxStyle;
+    btnExamine: TRzToolButton;
+    btnPrint: TRzToolButton;
+    rzrdgrpSelect: TRzRadioGroup;
+    btnDelete: TRzToolButton;
+    cxPageControl1: TcxPageControl;
+    cxTabSheet1: TcxTabSheet;
+    cxTabSheet2: TcxTabSheet;
+    cxGrid1: TcxGrid;
+    cxGridDBBandedTableView1: TcxGridDBBandedTableView;
+    cxGridDBBandedColumn1: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn2: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn5: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn6: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn7: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn8: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn9: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn10: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn11: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn12: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn13: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn14: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn15: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn16: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn17: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn18: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn19: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn20: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn21: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn22: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn23: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn24: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn25: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn26: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn27: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn28: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn29: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn30: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn31: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn32: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn33: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn34: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn35: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn36: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn37: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn38: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn39: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn40: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn41: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn42: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn43: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn44: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn45: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn46: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn47: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn49: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn50: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn51: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn52: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn53: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn54: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn55: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn56: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn57: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn58: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn59: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn60: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn61: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn62: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn63: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn64: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn65: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn66: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn67: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn68: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn69: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn70: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn71: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn72: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn73: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn74: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn75: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn76: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn77: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn78: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn79: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn80: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn81: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn82: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn83: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn84: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn85: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn86: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn87: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn88: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn89: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn90: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn91: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn92: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn93: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn94: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn95: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn96: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn97: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn98: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn99: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn100: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn101: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn102: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn103: TcxGridDBBandedColumn;
+    cxGridDBBandedColumn106: TcxGridDBBandedColumn;
+    cxGridLevel1: TcxGridLevel;
+    RzPanel1: TRzPanel;
+    RzToolButton2: TRzToolButton;
+    RzToolButton3: TRzToolButton;
+    RzToolButton7: TRzToolButton;
+    cxGridDBBandedTableView1Column1: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column2: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column3: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column4: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column5: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column6: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column7: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column8: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column9: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column10: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column11: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column12: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column13: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column14: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column15: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column16: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column17: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column18: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column19: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column20: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column21: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column22: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column23: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column24: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column25: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column26: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column27: TcxGridDBBandedColumn;
+    cxGridDBBandedTableView1Column28: TcxGridDBBandedColumn;
+    cxgrdCraftInfo: TcxGrid;
+    cxgrdbndtblvwCraftInfo: TcxGridDBBandedTableView;
+    cxgrdbndclmnProductName: TcxGridDBBandedColumn;
+    cxgrdbndclmnSpecification: TcxGridDBBandedColumn;
+    cxgrdbndclmnOrderAmount: TcxGridDBBandedColumn;
+    cxgrdbndclmnDeliveryTimeAndAmount: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn6: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn27: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn7: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn10: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn11: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn12: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn13: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn17: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn18: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn22: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn24: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn25: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn26: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn28: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn29: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn30: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn31: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn32: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn35: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn36: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn37: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn38: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn39: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn40: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn42: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn43: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn44: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn45: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn48: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn49: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn50: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn51: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn52: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn53: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn54: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn55: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn56: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn57: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn58: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn59: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn60: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn61: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoDBBandedColumn62: TcxGridDBBandedColumn;
+    cxgrdbndclmnCustomerName: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn2: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn3: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn4: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn5: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn6: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn7: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn8: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn9: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn10: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn11: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn12: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn13: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn14: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn15: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn16: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn17: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn18: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn19: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn20: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn22: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn23: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn24: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn25: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn26: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn27: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn28: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn29: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn30: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn31: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn34: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn35: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn36: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn37: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn38: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn39: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn41: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn43: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn44: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn45: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn46: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn47: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn49: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn50: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn51: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn52: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn53: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn54: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn55: TcxGridDBBandedColumn;
+    cxgrdbndclmnDesigner: TcxGridDBBandedColumn;
+    cxgrdbndclmnDesignDate: TcxGridDBBandedColumn;
+    cxgrdbndclmnExaminer: TcxGridDBBandedColumn;
+    cxgrdbndclmnExamineDate: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn60: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn61: TcxGridDBBandedColumn;
+    cxgrdbndclmnCraftInfoColumn62: TcxGridDBBandedColumn;
+    cxgrdbndclmnOrderID: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn1: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn2: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn3: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn4: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn5: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn6: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn7: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn8: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn9: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn10: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn11: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn12: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn13: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn14: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn15: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn16: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn17: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn18: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn19: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn20: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn21: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn22: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn23: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn24: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn25: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn26: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn27: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn28: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn29: TcxGridDBBandedColumn;
+    cxgrdbndtblvwCraftInfoColumn30: TcxGridDBBandedColumn;
+    cxgrdlvlCraftInfo: TcxGridLevel;
+    RzToolButton1: TRzToolButton;
+    btn1: TRzToolButton;
+    ImageList1: TImageList;
+    procedure btnExitClick(Sender: TObject);
+    procedure btnQueryClick(Sender: TObject);
+    procedure btnAddClick(Sender: TObject);
+    procedure btnModifyClick(Sender: TObject);
+    procedure btnExamineClick(Sender: TObject);
+    procedure btnPrintClick(Sender: TObject);
+    procedure rzrdgrpSelectClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure btnDeleteClick(Sender: TObject);
+    procedure RzToolButton3Click(Sender: TObject);
+    procedure RzToolButton7Click(Sender: TObject);
+    procedure RzToolButton1Click(Sender: TObject);
+    procedure btn1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    user,zw:string;   //录入人信息
+  end;
+
+var
+  FrmBGY: TFrmBGY;
+  lFile:TiniFile;
+  procedure pbgy(AHandle:THandle);stdcall;
+
+implementation
+uses UDM,bgycz,bgyfg,bgylr, bgyxg;
+
+{$R *.dfm}
+
+procedure pbgy(AHandle:THandle);stdcall;
+begin
+  Application.Handle:=AHandle;
+  FrmBGY:=TFrmBGY.Create(Application);
+  try
+    FrmBGY.ShowModal;
+  finally
+    TFrmBGY(FrmBGY).Free;
+  end;
+end;
+
+procedure TFrmBGY.btnExitClick(Sender: TObject);
+begin
+  Self.Close;
+end;
+
+procedure TFrmBGY.btnQueryClick(Sender: TObject);
+begin
+  if cxgrdbndtblvwCraftInfo.ViewData.RowCount>0 then
+  begin
+    FrmBGYCZ:=TFrmBGYCZ.Create(Self);
+    FrmBGYCZ.tag:=1;
+    FrmBGYCZ.ShowModal;
+    FreeAndNil(FrmBGYCZ);
+  end
+  else
+  begin
+    Application.MessageBox('没有显示的信息！','提示',MB_OK+MB_ICONINFORMATION);
+  end;
+
+end;
+
+procedure TFrmBGY.btnAddClick(Sender: TObject);
+begin
+  FrmBGYFG:=TFrmBGYFG.Create(Self);
+  FrmBGYFG.ShowModal;
+  FreeAndNil(FrmBGYFG); 
+end;
+
+procedure TFrmBGY.btnModifyClick(Sender: TObject);
+begin
+  if cxgrdbndtblvwCraftInfo.ViewData.RowCount>0 then
+  begin
+    FrmBGYLR:=TFrmBGYLR.Create(Self);
+    FrmBGYLR.Tag:=1;
+    FrmBGYLR.Caption:='棉布工艺修改';
+    FrmBGYLR.ShowModal;
+    FreeAndNil(FrmBGYLR);
+  end
+  else
+  begin
+    Application.MessageBox('没有可以修改的信息！','提示',MB_OK+MB_ICONINFORMATION);
+  end;
+end;
+
+procedure TFrmBGY.btnExamineClick(Sender: TObject);
+begin
+ if cxgrdbndtblvwCraftInfo.ViewData.RowCount>0 then
+ begin
+  FrmBGYLR:=TFrmBGYLR.Create(Self);
+  FrmBGYLR.Tag:=2;
+  FrmBGYLR.Caption:='棉布工艺审核';
+  FrmBGYLR.ShowModal;
+  FreeAndNil(FrmBGYLR);
+ end
+ else
+ begin
+   Application.MessageBox('没有可以审核的信息！','提示',MB_OK+MB_ICONINFORMATION);
+ end;
+end;
+
+procedure TFrmBGY.btnPrintClick(Sender: TObject);
+begin
+  if cxgrdbndtblvwCraftInfo.ViewData.RowCount>0 then
+  begin
+    FrmBGYLR:=TFrmBGYLR.Create(Self);
+    FrmBGYLR.Tag:=3;
+    FrmBGYLR.Caption:='棉布工艺打印';
+    FrmBGYLR.ShowModal;
+    FreeAndNil(FrmBGYLR);
+  end
+  else
+  begin
+   Application.MessageBox('没有可以打印的信息！','提示',MB_OK+MB_ICONINFORMATION);
+  end;
+end;
+
+procedure TFrmBGY.rzrdgrpSelectClick(Sender: TObject);
+begin
+  if rzrdgrpSelect.ItemIndex=0 then
+  begin
+    cxgrdbndtblvwCraftInfo.DataController.Filter.Root.Clear;
+    with DM.qryBCraftInfo do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Add('select * from v_棉布工艺信息  where 审核状态=0 and 作废状态=0 order by 品名');
+      Open;
+      btnDelete.Enabled:=False;
+      btnModify.Enabled:=True;
+      btnPrint.Enabled:=False;
+      btnExamine.Enabled:=true;
+      cxgrdbndclmnExaminer.Visible:=False;
+      cxgrdbndclmnExamineDate.Visible:=False;
+    end;
+  end;
+  if rzrdgrpSelect.ItemIndex=1 then
+  begin
+    with DM.qryBCraftInfo do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Add('select * from v_棉布工艺信息  where 审核状态=1 and 作废状态=0 order by 品名');
+      Open;
+    end;
+    cxgrdbndtblvwCraftInfo.DataController.Filter.Root.Clear;
+    btnModify.Enabled:=true;
+    btnPrint.Enabled:=True;
+    btnDelete.Enabled:=True;
+    btnExamine.Enabled:=False;
+    cxgrdbndclmnExaminer.Visible:=True;
+    cxgrdbndclmnExamineDate.Visible:=True;
+  end;
+end;
+
+procedure TFrmBGY.FormShow(Sender: TObject);
+begin
+  lFile:=Tinifile.Create(ExtractFilePath(Application.ExeName)+'login.ini');
+  user:=lFile.ReadString('登录信息','name','');
+    with DM.qryqx do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Add('select 职务 from 用户信息表 where 用户名=:yh ');
+      Parameters.ParamByName('yh').Value:=user;
+      Open;
+    end;
+    zw:=DM.qryqx.FieldByName('职务').AsString;
+  if zw='织部工程师' then
+  begin
+    btnAdd.Enabled:=True;
+  end
+  else
+  begin
+    btnAdd.Enabled:=True;
+  end;  
+  DM.qrygyhz.active:=True;
+  rzrdgrpSelect.ItemIndex:=0;
+    {cxgrdbndtblvwCraftInfo.DataController.Filter.Root.Clear;
+    with DM.qryBCraftInfo do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Add('select * from v_棉布工艺信息  where 审核状态=0 order by 品名');
+      Open;
+      btnDelete.Enabled:=False;
+      btnModify.Enabled:=True;
+      btnPrint.Enabled:=False;
+      cxgrdbndclmnExaminer.Visible:=False;
+      cxgrdbndclmnExamineDate.Visible:=False;
+    end;  }
+end;
+
+procedure TFrmBGY.btnDeleteClick(Sender: TObject);
+begin
+  if cxgrdbndtblvwCraftInfo.ViewData.RowCount>0 then
+  begin
+    with DM.qryCraftInProductionInfo do
+     begin
+       Close;
+       SQL.Clear;
+       SQL.Add('select 入库状态 from 棉布订单信息表 where 订单号=:ddh');
+       Parameters.ParamByName('ddh').Value:=DM.qryBCraftInfo.FieldByName('订单号').Value;
+       Open;
+     end;
+     if not DM.qryCraftInProductionInfo.FieldByName('入库状态').Value then
+     begin
+      Application.MessageBox('无法删除，其他信息中有该工艺信息！','提示',MB_OK+MB_ICONINFORMATION);
+      Exit;
+     end;
+      if Application.MessageBox('确定删除该工艺信息吗?','提示',MB_YESNO+MB_ICONINFORMATION)=ID_YES then
+      begin
+        try
+          with DM.qryBCraftInfoDelete do
+          begin
+            Close;
+            SQL.Clear;
+            SQL.Add('delete 棉布工艺表 where 订单号=:ddh');
+            Parameters.ParamByName('ddh').Value:=DM.qryBCraftInfo.FieldByName('订单号').Value;
+            ExecSQL;
+            Application.MessageBox('删除成功！','提示',MB_OK+MB_ICONINFORMATION);
+          end;
+          with DM.qryBCraftInfo do
+          begin
+            Close;
+            Open;
+          end;
+        except
+          Application.MessageBox('删除失败，请核查原因！','提示',MB_OK+MB_ICONERROR);
+        end;
+      end;
+
+  end
+  else
+  begin
+    Application.MessageBox('没有可以删除的信息！','提示',MB_OK+MB_ICONINFORMATION);
+  end;
+end;
+
+procedure TFrmBGY.RzToolButton3Click(Sender: TObject);
+begin
+    FrmBGYCZ:=TFrmBGYCZ.Create(Self);
+    FrmBGYCZ.tag:=2;
+    FrmBGYCZ.ShowModal;
+    FreeAndNil(FrmBGYCZ);
+end;
+
+procedure TFrmBGY.RzToolButton7Click(Sender: TObject);
+begin
+  if cxGridDBBandedTableView1.ViewData.RowCount>0 then
+  begin
+      if Application.MessageBox('确定删除该工艺信息吗?','提示',MB_YESNO+MB_ICONINFORMATION)=ID_YES then
+      begin
+        try
+          DM.qrygyhz.delete;
+          Application.MessageBox('删除成功！','提示',MB_OK+MB_ICONINFORMATION);
+          with DM.qrygyhz do
+          begin
+            Close;
+            Open;
+          end;
+        except
+          Application.MessageBox('删除失败，请核查原因！','提示',MB_OK+MB_ICONERROR);
+        end;
+      end;
+  end
+  else
+  begin
+    Application.MessageBox('没有可以删除的信息！','提示',MB_OK+MB_ICONINFORMATION);
+  end;
+end;
+
+procedure TFrmBGY.RzToolButton1Click(Sender: TObject);
+begin
+ if cxGridDBBandedTableView1.ViewData.RowCount>0 then
+  begin
+    FrmBGYLR:=TFrmBGYLR.Create(Self);
+    FrmBGYLR.Tag:=4;
+    FrmBGYLR.Caption:='棉布工艺查找';
+    FrmBGYLR.ShowModal;
+    FreeAndNil(FrmBGYLR);
+  end
+  else
+  begin
+   Application.MessageBox('没有可以查找的信息！','提示',MB_OK+MB_ICONINFORMATION);
+  end;
+end;
+
+procedure TFrmBGY.btn1Click(Sender: TObject);
+begin
+  if cxGridDBBandedTableView1.ViewData.RowCount>0 then
+  begin
+    FrmBGYXG:=TFrmBGYXG.Create(Self);
+    FrmBGYXG.Tag:=1;
+    FrmBGYXG.Caption:='棉布工艺修改';
+    FrmBGYXG.ShowModal;
+    FreeAndNil(FrmBGYXG);
+  end
+  else
+  begin
+    Application.MessageBox('没有可以修改的信息！','提示',MB_OK+MB_ICONINFORMATION);
+  end;
+end;
+
+end.

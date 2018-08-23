@@ -1,0 +1,95 @@
+unit bddxxlr;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, RzPanel, StdCtrls, RzLstBox, ComCtrls, RzButton,
+  RzEdit, Mask, RzLabel, ImgList, cxGraphics;
+
+type
+  TFrmDDXXLR = class(TForm)
+    cxmglst1: TcxImageList;
+    rzpnl1: TRzPanel;
+    lblProductName: TRzLabel;
+    lblSpecification: TRzLabel;
+    lblPlanBootAmount: TRzLabel;
+    lblSchedulingTime: TRzLabel;
+    lblCustomerInfo: TRzLabel;
+    lblMachineDetail: TRzLabel;
+    edtProductName: TRzEdit;
+    mmoSpecification: TRzMemo;
+    rzpnlBtns: TRzPanel;
+    btnSave: TRzToolButton;
+    btnExit: TRzToolButton;
+    dtpSchedulingTime: TDateTimePicker;
+    edtPlanBootAmount: TRzEdit;
+    lstCustomerInfo: TRzListBox;
+    mmoMachineDetail: TRzMemo;
+    lblPlanMachineType: TRzLabel;
+    edtPlanMachineType: TRzEdit;
+    lblSchedulingBootAmount: TRzLabel;
+    edtSchedulingBootAmount: TRzEdit;
+    lblSchedulingMachineType: TRzLabel;
+    edtSchedulingMachineType: TRzEdit;
+    procedure btnExitClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure btnSaveClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmDDXXLR: TFrmDDXXLR;
+
+implementation
+
+{$R *.dfm}
+uses UDM,bscjh,bjljck;
+
+procedure TFrmDDXXLR.btnExitClick(Sender: TObject);
+begin
+  Self.Close;
+end;
+
+procedure TFrmDDXXLR.FormShow(Sender: TObject);
+begin
+  dtpSchedulingTime.Date:=Date();
+  edtProductName.Text:=DM.qryBProductionPlan.FieldByName('品名').AsString;
+  lstCustomerInfo.Items[0]:=DM.qryBProductionPlan.FieldByName('客户名称').AsString;
+  mmoSpecification.Text:=DM.qryBProductionPlan.FieldByName('规格').AsString;
+  edtPlanBootAmount.Text:=DM.qryBProductionPlan.FieldByName('计划开台数').AsString;
+  edtPlanMachineType.Text:=DM.qryBProductionPlan.FieldByName('计划机型').AsString;
+  edtSchedulingBootAmount.SetFocus;
+end;
+
+
+procedure TFrmDDXXLR.btnSaveClick(Sender: TObject);
+begin
+  try
+    with DM.qryBSchedulingInsert do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Add('select * from 棉布计划调度信息表');
+      Open;
+      Insert;
+      FieldByName('调度日期').AsString:=formatdatetime('yyyy-mm-dd',dtpSchedulingTime.Date);
+      FieldByName('订单号').AsString:=DM.qryBProductionPlan.FieldByName('订单号').AsString;
+      FieldByName('开台数').AsString:=Trim(edtSchedulingBootAmount.Text);
+      FieldByName('开台机型').AsString:=Trim(edtSchedulingMachineType.Text);
+      FieldByName('开台详情').AsString:=Trim(mmoMachineDetail.Text);
+      Post;
+      Application.MessageBox('调度信息保存成功！','提示',MB_OK+MB_ICONINFORMATION);
+      Self.Close;
+      FrmBJLJCK.Close;
+    end;
+  except
+    Application.MessageBox('保存失败,请核查原因！','提示',MB_OK+MB_ICONERROR);
+    Self.Close;
+  end;
+end;
+
+end.

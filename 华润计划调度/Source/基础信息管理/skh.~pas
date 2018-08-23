@@ -1,0 +1,403 @@
+unit skh;
+
+interface
+
+uses
+   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, RzTabs, cxGraphics, cxControls, cxLookAndFeels,
+  cxLookAndFeelPainters, cxStyles, dxSkinsCore, dxSkinsDefaultPainters,
+  dxSkinscxPCPainter, cxCustomData, cxFilter, cxData, cxDataStorage,
+  cxEdit, DB, cxDBData, cxContainer, cxLabel, cxTextEdit, cxCalc,
+  cxBlobEdit, cxGridCustomTableView, cxGridCardView, cxGridDBCardView,
+  StdCtrls, RzEdit, RzButton, cxMaskEdit, cxDropDownEdit, cxLookupEdit,
+  cxDBLookupEdit, cxDBLookupComboBox, Mask, RzLabel, RzPanel, cxGridLevel,
+  cxClasses, cxGridCustomView, cxGrid, ExtCtrls, frxClass, frxDBSet,
+  frxGradient, frxRich, ADODB, frxExportXLS,IniFiles, ImgList;
+
+type
+  TFrmSKH = class(TForm)
+    rzpnl1: TRzPanel;
+    RzPanel1: TRzPanel;
+    cxgrdSCustomer: TcxGrid;
+    cxgrdbcrdvwSCustomer: TcxGridDBCardView;
+    cxgrdbcrdvwrwSCustomerID: TcxGridDBCardViewRow;
+    cxgrdbcrdvwrwSCustomerName: TcxGridDBCardViewRow;
+    cxgrdbcrdvwrwSAddress: TcxGridDBCardViewRow;
+    cxgrdbcrdvwrwSZipCode: TcxGridDBCardViewRow;
+    cxgrdbcrdvwrwSTel: TcxGridDBCardViewRow;
+    cxgrdlvlSCustomer: TcxGridLevel;
+    rzgrpbxBInput: TRzGroupBox;
+    lblSCustomerName: TRzLabel;
+    lblSAddress: TRzLabel;
+    lblSZipCode: TRzLabel;
+    lblSTel: TRzLabel;
+    lblSFax: TRzLabel;
+    lblSBank: TRzLabel;
+    lblSBankAccount: TRzLabel;
+    lblSMemo: TRzLabel;
+    rzdtSCustomerName: TRzEdit;
+    rzdtSAddress: TRzEdit;
+    rzdtSZipCode: TRzEdit;
+    rzdtSTel: TRzEdit;
+    rzdtSFax: TRzEdit;
+    rzdtSBank: TRzEdit;
+    rzmSMemo: TRzMemo;
+    frxrprtSCustomer: TfrxReport;
+    frxdbdtstSCustomer: TfrxDBDataset;
+    cxstylrpstry1: TcxStyleRepository;
+    cxstyl2: TcxStyle;
+    cxstyl3: TcxStyle;
+    cxgrdcrdvwstylsht1: TcxGridCardViewStyleSheet;
+    frxrchbjct1: TfrxRichObject;
+    frxgrdntbjct1: TfrxGradientObject;
+    cxgrdbcrdvwrwSFax: TcxGridDBCardViewRow;
+    cxgrdbcrdvwrwSBank: TcxGridDBCardViewRow;
+    cxgrdbcrdvwrwSBankAccount: TcxGridDBCardViewRow;
+    cxgrdbcrdvwrwSMemo: TcxGridDBCardViewRow;
+    rzmSBankAccount: TRzMemo;
+    cxmglst1: TcxImageList;
+    rzpnlSBtns: TRzPanel;
+    btnSQuery: TRzToolButton;
+    btnSAdd: TRzToolButton;
+    btnSSave: TRzToolButton;
+    btnSCancel: TRzToolButton;
+    btnSModify: TRzToolButton;
+    btnSDelete: TRzToolButton;
+    btnSPrint: TRzToolButton;
+    btnSExit: TRzToolButton;
+    frxXLSExport1: TfrxXLSExport;
+    procedure rzbtbtnSQueryClick(Sender: TObject);
+    procedure rzbtbtnSAddClick(Sender: TObject);
+    procedure rzbtbtnSSaveClick(Sender: TObject);
+    procedure rzbtbtnSCancelClick(Sender: TObject);
+    procedure rzbtbtnSModifyClick(Sender: TObject);
+    procedure rzbtbtnSDeleteClick(Sender: TObject);
+    procedure rzbtbtnSPrintClick(Sender: TObject);
+    procedure rzbtbtnSExitClick(Sender: TObject);
+    procedure frxrprtSCustomerGetValue(const VarName: String; var Value: Variant);
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+     function auto(ADOQuery1:TADOQuery):string;
+  public
+    { Public declarations }
+  end;
+
+var
+  user,Dep:string;  //录入人和所在部门
+  lFile:TiniFile;
+  FrmSKH: TFrmSKH;
+  procedure pskh(AHandle:THandle);stdcall;
+
+implementation
+uses UDM,khcz;
+
+{$R *.dfm}
+
+procedure pskh(AHandle:THandle);stdcall;
+begin
+  Application.Handle:=AHandle;
+  FrmSKH:=TFrmSKH.Create(Application);
+  try
+    FrmSKH.ShowModal;
+  finally
+    TFrmSKH(FrmSKH).Free;
+  end;
+end;
+
+function TFrmSKH.auto(ADOQuery1:TADOQuery):string;
+var
+  s,khh:string;
+begin
+  if  not ADOQuery1.eof then
+  begin
+    ADOQuery1.Last;
+    s:= Copy(ADOQuery1.FieldByName('客户号').AsString,1,3);
+    khh:=s+Format('%.3d',[(StrToInt(Copy(ADOQuery1.FieldByName('客户号').AsString,4,3))+1)]);
+  end
+  else
+  begin
+    khh:='KH-001';
+  end;
+  result:=khh;
+end;
+
+procedure TFrmSKH.rzbtbtnSQueryClick(Sender: TObject);
+begin
+  FrmKHCZ:=TFrmKHCZ.Create(Self);
+  FrmKHCZ.Tag:=2;
+  FrmKHCZ.ShowModal;
+  FreeAndNil(FrmKHCZ);
+end;
+
+procedure TFrmSKH.rzbtbtnSAddClick(Sender: TObject);
+begin
+  rzgrpbxBInput.Tag:=1;
+  rzdtSCustomerName.Enabled:=True;
+  rzdtSCustomerName.SetFocus;
+  rzdtSZipCode.Enabled:=True;
+  rzdtSAddress.Enabled:=True;
+  rzdtSTel.Enabled:=True;
+  rzdtSFax.Enabled:=True;
+  rzdtSBank.Enabled:=True;
+  rzmSBankAccount.Enabled:=True;
+  rzmSMemo.Enabled:=True;
+  btnSQuery.Enabled:=False;
+  btnSAdd.Enabled:=False;
+  btnSSave.Enabled:=True;
+  btnSCancel.Enabled:=True;
+  btnSModify.Enabled:=False;
+  btnSDelete.Enabled:=False;
+  btnSPrint.Enabled:=False;
+end;
+
+procedure TFrmSKH.rzbtbtnSSaveClick(Sender: TObject);
+var
+  autosbh:string;//自动生成的购纱客户编号
+begin
+  if((Trim(rzdtSCustomerName.Text)='')) then
+  begin
+    Application.MessageBox('请输入客户名称!','提示',MB_OK+MB_ICONINFORMATION);
+  end
+  else
+  begin
+   case rzgrpbxBInput.Tag of
+   1:begin
+      autosbh:=auto(DM.qrySCustomer);
+      try
+        with DM.qrySCustomer do
+        begin
+          Edit;
+          Insert;
+          FieldByName('客户号').AsString:=autosbh;
+          FieldByName('客户名称').AsString:=Trim(rzdtSCustomerName.Text);
+          FieldByName('地址').AsString:=Trim(rzdtSAddress.Text);
+          FieldByName('邮编').AsString:=Trim(rzdtSZipCode.Text);
+          FieldByName('电话').AsString:=Trim(rzdtSTel.Text);
+          FieldByName('传真').AsString:=Trim(rzdtSFax.Text);
+          FieldByName('开户银行').AsString:=Trim(rzdtSBank.Text);
+          FieldByName('银行账号').AsString:=Trim(rzmSBankAccount.Text);
+          FieldByName('备注').AsString:=Trim(rzmSMemo.Text);
+          Refresh;
+          application.MessageBox('保存成功！','提示',MB_OK+MB_ICONINFORMATION);
+        end;
+      except
+          application.MessageBox('保存失败，请核查原因！','提示',MB_OK+MB_ICONERROR);
+      end;
+     end;
+   2:begin
+      try
+        with DM.qrySCustomerModify do
+        begin
+          Close;
+          SQL.Clear;
+          SQL.Add('update 购纱客户信息表 set 客户名称=:khmc,邮编=:khyb,地址=:khdz,电话=:dh,传真=:cz,开户银行=:khyh,银行账号=:yhzh,备注=:bz where 客户号=:khbh ');
+          Parameters.ParamByName('khmc').Value:=Trim(rzdtSCustomerName.Text);
+          Parameters.ParamByName('khyb').Value:=Trim(rzdtSZipCode.Text);
+          Parameters.ParamByName('khdz').Value:=Trim(rzdtSAddress.Text);
+          Parameters.ParamByName('dh').Value:=Trim(rzdtSTel.Text);
+          Parameters.ParamByName('cz').Value:=Trim(rzdtSFax.Text);
+          Parameters.ParamByName('khyh').Value:=Trim(rzdtSBank.Text);
+          Parameters.ParamByName('yhzh').Value:=Trim(rzmSBankAccount.Text);
+          Parameters.ParamByName('bz').Value:=Trim(rzmSMemo.Text);
+          Parameters.ParamByName('khbh').Value:=DM.qrySCustomer.FieldByName('客户号').AsString;
+          ExecSQL;
+          DM.qrySCustomer.Refresh;
+          application.MessageBox('修改成功!','提示',MB_OK+MB_ICONINFORMATION);
+        end;
+      except
+          application.MessageBox('修改失败，请核查原因!','提示',MB_OK+MB_ICONERROR);
+      end;
+     end;
+   end;
+    rzdtSCustomerName.Text:='';
+    rzdtSCustomerName.Enabled:=False;
+    rzdtSZipCode.Text:='';
+    rzdtSZipCode.Enabled:=False;
+    rzdtSAddress.Text:='';
+    rzdtSAddress.Enabled:=False;
+    rzdtSTel.Text:='';
+    rzdtSTel.Enabled:=False;
+    rzdtSFax.Text:='';
+    rzdtSFax.Enabled:=False;
+    rzdtSBank.Text:='';
+    rzdtSBank.Enabled:=False;
+    rzmSBankAccount.Text:='';
+    rzmSBankAccount.Enabled:=False;
+    rzmSMemo.Text:='';
+    rzmSMemo.Enabled:=False;
+    btnSQuery.Enabled:=True;
+    btnSAdd.Enabled:=True;
+    btnSSave.Enabled:=False;
+    btnSCancel.Enabled:=False;
+    btnSModify.Enabled:=True;
+    btnSDelete.Enabled:=True;
+    btnSPrint.Enabled:=True;
+  end;
+end;
+
+procedure TFrmSKH.rzbtbtnSCancelClick(Sender: TObject);
+begin
+  rzdtSCustomerName.Text:='';
+  rzdtSCustomerName.Enabled:=False;
+  rzdtSZipCode.Text:='';
+  rzdtSZipCode.Enabled:=False;
+  rzdtSAddress.Text:='';
+  rzdtSAddress.Enabled:=False;
+  rzdtSTel.Text:='';
+  rzdtSTel.Enabled:=False;
+  rzdtSFax.Text:='';
+  rzdtSFax.Enabled:=False;
+  rzdtSBank.Text:='';
+  rzdtSBank.Enabled:=False;
+  rzmSBankAccount.Text:='';
+  rzmSBankAccount.Enabled:=False;
+  rzmSMemo.Text:='';
+  rzmSMemo.Enabled:=False;
+  btnSQuery.Enabled:=True;
+  btnSAdd.Enabled:=True;
+  btnSSave.Enabled:=False;
+  btnSCancel.Enabled:=False;
+  btnSModify.Enabled:=True;
+  btnSDelete.Enabled:=True;
+  btnSPrint.Enabled:=True;
+end;
+
+procedure TFrmSKH.rzbtbtnSModifyClick(Sender: TObject);
+begin
+  if cxgrdbcrdvwSCustomer.ViewData.CardCount>0 then
+  begin
+    rzgrpbxBInput.Tag:=2;
+    rzdtSCustomerName.Enabled:=True;
+    rzdtSCustomerName.Text:=DM.qrySCustomer.FieldByName('客户名称').AsString;
+    rzdtSCustomerName.SetFocus;
+    rzdtSZipCode.Enabled:=True;
+    rzdtSZipCode.Text:=DM.qrySCustomer.FieldByName('邮编').AsString;
+    rzdtSAddress.Enabled:=True;
+    rzdtSAddress.Text:=DM.qrySCustomer.FieldByName('地址').AsString;
+    rzdtSTel.Enabled:=True;
+    rzdtSTel.Text:=DM.qrySCustomer.FieldByName('电话').AsString;
+    rzdtSFax.Enabled:=True;
+    rzdtSFax.Text:=DM.qrySCustomer.FieldByName('传真').AsString;
+    rzdtSBank.Enabled:=True;
+    rzdtSBank.Text:=DM.qrySCustomer.FieldByName('开户银行').AsString;
+    rzmSBankAccount.Enabled:=True;
+    rzmSBankAccount.Text:=DM.qrySCustomer.FieldByName('银行账号').AsString;
+    rzmSMemo.Enabled:=True;
+    rzmSMemo.Text:=DM.qrySCustomer.FieldByName('备注').AsString;
+    btnSQuery.Enabled:=False;
+    btnSAdd.Enabled:=False;
+    btnSSave.Enabled:=True;
+    btnSCancel.Enabled:=True;
+    btnSModify.Enabled:=False;
+    btnSDelete.Enabled:=False;
+    btnSPrint.Enabled:=False;
+  end
+  else
+  begin
+    Application.MessageBox('没有可以修改的信息！','提示',MB_OK+MB_ICONINFORMATION);
+  end;
+  if cxgrdbcrdvwSCustomer.ViewData.CardCount>0 then
+  begin
+    rzgrpbxBInput.Tag:=2;
+    rzdtSCustomerName.Enabled:=True;
+    rzdtSCustomerName.Text:=DM.qrySCustomer.FieldByName('客户名称').AsString;
+    rzdtSCustomerName.SetFocus;
+    rzdtSZipCode.Enabled:=True;
+    rzdtSZipCode.Text:=DM.qrySCustomer.FieldByName('邮编').AsString;
+    rzdtSAddress.Enabled:=True;
+    rzdtSAddress.Text:=DM.qrySCustomer.FieldByName('地址').AsString;
+    rzdtSTel.Enabled:=True;
+    rzdtSTel.Text:=DM.qrySCustomer.FieldByName('电话').AsString;
+    rzdtSFax.Enabled:=True;
+    rzdtSFax.Text:=DM.qrySCustomer.FieldByName('传真').AsString;
+    rzdtSBank.Enabled:=True;
+    rzdtSBank.Text:=DM.qrySCustomer.FieldByName('开户银行').AsString;
+    rzmSBankAccount.Enabled:=True;
+    rzmSBankAccount.Text:=DM.qrySCustomer.FieldByName('银行账号').AsString;
+    rzmSMemo.Enabled:=True;
+    rzmSMemo.Text:=DM.qrySCustomer.FieldByName('备注').AsString;
+    btnSQuery.Enabled:=False;
+    btnSAdd.Enabled:=False;
+    btnSSave.Enabled:=True;
+    btnSCancel.Enabled:=True;
+    btnSModify.Enabled:=False;
+    btnSDelete.Enabled:=False;
+    btnSPrint.Enabled:=False;
+  end
+  else
+  begin
+    Application.MessageBox('没有可以修改的信息！','提示',MB_OK+MB_ICONINFORMATION);
+  end;
+end;
+
+procedure TFrmSKH.rzbtbtnSDeleteClick(Sender: TObject);
+begin
+  if cxgrdbcrdvwSCustomer.ViewData.CardCount>0 then
+  begin
+   if Application.MessageBox('确定删除该客户信息?','提示',MB_YESNO+MB_ICONINFORMATION)=ID_YES then
+   begin
+    try
+     DM.qrySCustomer.Delete;
+     Application.MessageBox('删除成功！','提示',MB_OK+MB_ICONINFORMATION);
+    except
+     Application.MessageBox('删除失败，请核查原因！','提示',MB_OK+MB_ICONERROR);
+    end;
+   end;
+  end
+  else
+  begin
+    Application.MessageBox('没有可以删除的信息！','提示',MB_OK+MB_ICONINFORMATION);
+  end;
+end;
+
+procedure TFrmSKH.rzbtbtnSPrintClick(Sender: TObject);
+begin
+  DM.qrySCustomer.Filtered:=True;
+  DM.qrySCustomer.Filter:=cxgrdbcrdvwSCustomer.DataController.Filter.FilterText; //保证与cxgrid当前数据一致
+  try
+    if not FileExists(ExtractFilePath(Application.ExeName)+'\ReportSheet\SCustomer.fr3') then
+    begin
+      Application.MessageBox('打印失败,可能是系统文件丢失,尝试下重新安装程序!','提示',MB_OK + MB_ICONINFORMATION);
+      Exit;
+    end;
+    frxrprtSCustomer.LoadFromFile(ExtractFilePath(Application.ExeName)+'\ReportSheet\SCustomer.fr3');
+    frxrprtSCustomer.PrepareReport();
+    frxrprtSCustomer.ShowReport(True);
+  except
+    Application.MessageBox('无法打印，请核查原因！','提示',MB_OK+MB_ICONERROR);
+    DM.qrySCustomer.Filtered:=False;
+  end;
+end;
+
+procedure TFrmSKH.rzbtbtnSExitClick(Sender: TObject);
+begin
+  Self.Close;
+end;
+
+procedure TFrmSKH.frxrprtSCustomerGetValue(const VarName: String;
+  var Value: Variant);
+begin
+  if VarName='打印人' then   //在打印页面显示打印人信息
+  begin
+    Value:=user;
+  end;
+  if VarName='部门' then   //在打印页面显示打印人所在部门信息
+  begin
+    Value:=Dep;
+  end;
+  if VarName='数量' then   //在打印页面显示打印人所在部门信息
+  begin
+    Value:=IntToStr(cxgrdbcrdvwSCustomer.ViewData.CardCount);
+  end;
+end;
+
+procedure TFrmSKH.FormShow(Sender: TObject);
+begin
+  lFile:=Tinifile.Create(ExtractFilePath(Application.ExeName)+'login.ini');
+  user:=lFile.ReadString('登录信息','name','');
+  Dep:=lFile.ReadString('登录信息','bmmc','');
+  DM.qrySCustomer.Active:=True;
+end;
+
+end.

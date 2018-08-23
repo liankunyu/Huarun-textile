@@ -1,0 +1,535 @@
+unit main;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ImgList, Menus, RzGroupBar, ExtCtrls, RzPanel, RzSplit, jpeg,
+  RzStatus, ActnList, DB, ADODB,IniFiles, ActnMan, ActnColorMaps, RzSpnEdt, ShellAPI,
+  XPMan, RzBHints, RzTray, ToolWin, ComCtrls;
+
+type
+  TFrmMain = class(TForm)
+    Image4: TImage;
+    RzSplitter1: TRzSplitter;
+    RzGroupBar1: TRzGroupBar;
+    RzGroup2: TRzGroup;
+    RzGroup3: TRzGroup;
+    RzStatusBar1: TRzStatusBar;
+    RzFieldStatus1: TRzFieldStatus;
+    RzClockStatus1: TRzClockStatus;
+    RzStatusPane2: TRzStatusPane;
+    RzGroup7: TRzGroup;
+    RzGroup8: TRzGroup;
+    RzFieldStatus2: TRzFieldStatus;
+    RzGroup1: TRzGroup;
+    RzGroup4: TRzGroup;
+    RzGroup5: TRzGroup;
+    RzStatusPane1: TRzStatusPane;
+    RzStatusPane3: TRzStatusPane;
+    il1: TImageList;
+    RzStatusPane4: TRzStatusPane;
+    RzTrayIcon1: TRzTrayIcon;
+    pm1: TPopupMenu;
+    NExit: TMenuItem;
+    NAbout: TMenuItem;
+    NHelp: TMenuItem;
+    N54: TMenuItem;
+    MainMenu1: TMainMenu;
+    N2: TMenuItem;
+    N18: TMenuItem;
+    N19: TMenuItem;
+    N22: TMenuItem;
+    N29: TMenuItem;
+    N3: TMenuItem;
+    N26: TMenuItem;
+    N25: TMenuItem;
+    N38: TMenuItem;
+    N39: TMenuItem;
+    N13: TMenuItem;
+    N21: TMenuItem;
+    N14: TMenuItem;
+    N42: TMenuItem;
+    N43: TMenuItem;
+    N44: TMenuItem;
+    N45: TMenuItem;
+    N47: TMenuItem;
+    N20: TMenuItem;
+    N27: TMenuItem;
+    N28: TMenuItem;
+    N7: TMenuItem;
+    N16: TMenuItem;
+    N40: TMenuItem;
+    N34: TMenuItem;
+    N41: TMenuItem;
+    N17: TMenuItem;
+    N51: TMenuItem;
+    N12: TMenuItem;
+    N9: TMenuItem;
+    N15: TMenuItem;
+    N4: TMenuItem;
+    N5: TMenuItem;
+    N6: TMenuItem;
+    N8: TMenuItem;
+    N46: TMenuItem;
+    N1: TMenuItem;
+    N23: TMenuItem;
+    N33: TMenuItem;
+    N24: TMenuItem;
+    N11: TMenuItem;
+    N10: TMenuItem;
+    xpmnfst1: TXPManifest;
+    N60: TMenuItem;
+    N30: TMenuItem;
+    N31: TMenuItem;
+    N35: TMenuItem;
+    N32: TMenuItem;
+    N37: TMenuItem;
+    N36: TMenuItem;
+    N48: TMenuItem;
+    N50: TMenuItem;
+    N49: TMenuItem;
+    N52: TMenuItem;
+    N53: TMenuItem;
+    tmr1: TTimer;
+    procedure FormShow(Sender: TObject);
+    procedure N10Click(Sender: TObject);
+    procedure N5Click(Sender: TObject);
+    procedure N6Click(Sender: TObject);
+    procedure N8Click(Sender: TObject);
+    procedure N17Click(Sender: TObject);
+    procedure N21Click(Sender: TObject);
+    procedure N24Click(Sender: TObject);
+    procedure N11Click(Sender: TObject);
+    procedure N16Click(Sender: TObject);
+    procedure N12Click(Sender: TObject);
+    procedure N32Click(Sender: TObject);
+    procedure N26Click(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure N33Click(Sender: TObject);
+    procedure N34Click(Sender: TObject);
+    procedure N36Click(Sender: TObject);
+    procedure N37Click(Sender: TObject);
+    procedure N27Click(Sender: TObject);
+    procedure N40Click(Sender: TObject);
+    procedure N46Click(Sender: TObject);
+    procedure N15Click(Sender: TObject);
+    procedure N4Click(Sender: TObject);
+    procedure N47Click(Sender: TObject);
+    procedure N23Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure N44Click(Sender: TObject);
+    procedure N18Click(Sender: TObject);
+    procedure N22Click(Sender: TObject);
+    procedure N42Click(Sender: TObject);
+    procedure N51Click(Sender: TObject);
+    procedure N30Click(Sender: TObject);
+    procedure N60Click(Sender: TObject);
+    procedure N31Click(Sender: TObject);
+    procedure N35Click(Sender: TObject);
+    procedure N38Click(Sender: TObject);
+    procedure N19Click(Sender: TObject);
+    procedure N29Click(Sender: TObject);
+    procedure N25Click(Sender: TObject);
+    procedure N43Click(Sender: TObject);
+    procedure N45Click(Sender: TObject);
+    procedure N28Click(Sender: TObject);
+    procedure N41Click(Sender: TObject);
+    procedure N39Click(Sender: TObject);
+    procedure N48Click(Sender: TObject);
+    procedure N50Click(Sender: TObject);
+    procedure RzGroup4Items8Click(Sender: TObject);
+    procedure RzGroup4Items9Click(Sender: TObject);
+    procedure RzGroup4Items10Click(Sender: TObject);
+    procedure tmr1Timer(Sender: TObject);
+
+
+  private
+  public
+    { Public declarations }
+    procedure LoadDll(dllname:PChar;fun:PChar);
+  end;
+  var
+  FrmMain: TFrmMain;
+  user,bmmc,qxmc,zw:string;  //操作员信息
+  lFile:TiniFile;
+  swidth,sheight:Integer;//记录屏幕原始分辨率
+  flash:BOOL;
+
+implementation
+{$R *.dfm}
+uses gy,UDM,unitshare;
+
+procedure TFrmMain.LoadDll(dllname:PChar;fun:PChar);
+var
+  alib:THandle;//句柄
+  proc:procedure(Ahandle:THandle);stdcall;//过程
+begin
+  alib:=LoadLibrary(dllname); //获取DLL文件
+  if alib<32 then
+    begin
+
+    end;
+  @proc:=GetProcAddress(alib,fun); //获取dll文件中输出函数的地址
+  try
+    proc(Handle); //显示
+  finally
+    FreeLibrary(alib);//释放
+  end;
+end;
+
+procedure TFrmMain.FormShow(Sender: TObject);   var
+ DLLHandle :Thandle;
+ ShowLoginForm:function (handle:Thandle):Boolean;stdcall;   //登录界面显示
+begin
+ DLLHandle := LoadLibrary('loginsystem.dll');
+ try
+  @ShowLoginForm:= GetProcAddress(DllHandle,'ShowLoginForm');
+  ShowLoginForm(Application.handle);
+ finally
+  FreeLibrary(DllHandle);
+ end;
+  lFile:=Tinifile.Create(ExtractFilePath(Application.ExeName)+'login.ini');
+  user:=lFile.ReadString('登录信息','name','');
+  bmmc:=lFile.ReadString('登录信息','bmmc','');
+  qxmc:=lFile.ReadString('登录信息','qx','');
+  swidth:=StrToInt(lFile.ReadString('登录信息','分辨率宽','')); //获取屏幕原始分辨率宽
+  sheight:=StrToInt(lFile.ReadString('登录信息','分辨率高','')); //获取屏幕原始分辨率高
+  FrmMain.RzFieldStatus1.Caption:='部门:'+bmmc;    //状态栏显示相应的登录部门
+  FrmMain.RzFieldStatus2.Caption:='用户名:'+user;  //状态栏显示相应的登录用户名
+   ProrityDistribute(DM.ADOQuery1,qxmc,Self.MainMenu1,Self.RzGroupBar1);  //调用公用单元文件里面的权限分配函数
+   with DM.qryqx do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Add('select 职务 from 用户信息表 where 用户名=:yh ');
+      Parameters.ParamByName('yh').Value:=user;
+      Open;
+    end;
+    zw:=DM.qryqx.FieldByName('职务').AsString;
+end;
+
+//================================系统退出======================================
+procedure TFrmMain.N10Click(Sender: TObject);
+begin
+  self.Close;
+end;
+
+procedure TFrmMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+  if
+   Application.MessageBox('你确认要退出本系统吗？','提示',MB_ICONINFORMATION+MB_YESNO)=ID_YES
+  then
+  begin
+    Self.Visible:=False;
+    CanClose:=True;
+  end
+  else
+   CanClose:=False;
+end;
+
+procedure TFrmMain.FormClose(Sender: TObject; var Action: TCloseAction);  //关闭窗体后屏幕分辨率变为原始分辨率
+begin
+  begin
+    if (swidth<>Screen.Width) or (sheight<>Screen.Height) then
+    begin
+     if DynamicResolution(swidth,sheight) then
+      showmessage( '屏幕的分辨率已成功设为原始分辨率 ！');
+    end;
+  end;
+end;
+
+//================================系统帮助======================================
+
+procedure TFrmMain.N23Click(Sender: TObject);            //帮助文档
+begin
+  try
+    ShellExecute(0,'open',Pchar(ExtractfilePath(Application.ExeName)+'help.chm'),0,0,SW_SHOWNORMAL);
+  except
+    Application.MessageBox('帮助文档无法找到，请核查！','提示',MB_OK+MB_ICONINFORMATION);
+  end;
+end;
+
+procedure TFrmMain.N11Click(Sender: TObject);            // 关于系统
+begin
+  FrmGY:=TFrmGY.Create(self);
+  FrmGY.ShowModal;
+  FrmGY.Free;
+end;
+
+procedure TFrmMain.N24Click(Sender: TObject);            // 密码修改
+begin
+  LoadDll('XTGL.dll','ppwdchange');
+end;
+
+procedure TFrmMain.N33Click(Sender: TObject);           // 用户切换
+var
+  DLLHandle :Thandle;
+  ShowLoginForm:function (handle:Thandle):Boolean;stdcall;
+begin
+ if Application.MessageBox('确实要进行用户切换吗？','系统提示',MB_ICONINFORMATION+MB_YESNO)=ID_YES then
+ begin
+   if (swidth<>Screen.Width) or (sheight<>Screen.Height) then
+    begin
+     if DynamicResolution(swidth,sheight) then
+      begin
+      
+      end;
+    end;
+   DLLHandle := LoadLibrary('loginsystem.dll');
+   try
+    @ShowLoginForm:= GetProcAddress(DllHandle,'ShowLoginForm');
+    ShowLoginForm(Application.handle);
+   finally
+    FreeLibrary(DllHandle);
+   end;
+   lFile:=Tinifile.Create(ExtractFilePath(Application.ExeName)+'login.ini');
+   user:=lFile.ReadString('登录信息','name','');
+   bmmc:=lFile.ReadString('登录信息','bmmc','');
+   qxmc:=lFile.ReadString('登录信息','qx','');
+   FrmMain.RzFieldStatus1.Caption:='部门:'+bmmc;             //在状态栏显示刚登录的用户部门
+   FrmMain.RzFieldStatus2.Caption:='用户名:'+user;          //在状态栏显示刚登录的用户名
+   MenuAllShow(Self.MainMenu1,Self.RzGroupBar1);            //调用公用单元文件里面的展示所有菜单的函数
+   ProrityDistribute(DM.ADOQuery1,qxmc,Self.MainMenu1,Self.RzGroupBar1); //调用公用单元文件里面的权限分配函数
+ end;
+end;
+
+//================================系统管理======================================
+
+procedure TFrmMain.N15Click(Sender: TObject);
+begin
+  LoadDll('XTGL.dll','puser');                            // 用户管理
+end;
+
+procedure TFrmMain.N4Click(Sender: TObject);
+begin
+  LoadDll('XTGL.dll','ppopem');                          // 权限管理
+end;
+
+procedure TFrmMain.N5Click(Sender: TObject);
+begin
+  LoadDll('XTGL.dll','pbackup');                         // 数据备份
+end;
+
+procedure TFrmMain.N6Click(Sender: TObject);
+begin
+  LoadDll('XTGL.dll','prestore');                       // 数据还原
+end;
+
+procedure TFrmMain.N8Click(Sender: TObject);
+begin
+  LoadDll('XTGL.dll','plog');                          // 日志管理
+end;
+
+procedure TFrmMain.N46Click(Sender: TObject);
+begin
+  LoadDll('XTGL.dll','pclear');                        // 系统初始化
+end;
+
+//================================基础信息管理======================================
+procedure TFrmMain.N16Click(Sender: TObject);
+begin
+  LoadDll('JCXX.dll','pbxx');                           //棉布信息管理
+end;
+
+procedure TFrmMain.N40Click(Sender: TObject);
+begin
+  LoadDll('JCXX.dll','pbgy');                           //棉布工艺管理
+end;
+
+procedure TFrmMain.N41Click(Sender: TObject);
+begin
+  LoadDll('JCXX.dll','psjgyfg');                           //纱机工艺翻改管理
+end;
+
+procedure TFrmMain.N34Click(Sender: TObject);
+begin
+  //LoadDll('JCXX.dll','psxx');                           //棉纱信息管理
+end;
+
+procedure TFrmMain.N17Click(Sender: TObject);
+begin
+  LoadDll('JCXX.dll','pbkh');                          //购布客户信息管理
+end;
+
+procedure TFrmMain.N51Click(Sender: TObject);
+begin
+  LoadDll('JCXX.dll','pskh');                          //购纱客户信息管理
+end;
+
+procedure TFrmMain.N12Click(Sender: TObject);
+begin
+  LoadDll('JCXX.dll','pbm');                         //部门信息管理
+end;
+
+procedure TFrmMain.N30Click(Sender: TObject);
+begin
+  ShellExecute(handle,'open','配棉/ZNPM.exe',nil,nil,SW_SHOWNORMAL);                                                    //配棉信息管理
+end;
+
+
+
+//================================库存信息管理======================================
+procedure TFrmMain.N27Click(Sender: TObject);
+begin
+  LoadDll('KCXX.dll','pbckxx');                         //棉布出库信息管理
+end;
+
+procedure TFrmMain.N28Click(Sender: TObject);
+begin
+  //LoadDll('KCXX.dll','psckxx');                         //棉布出库信息管理
+end;
+
+procedure TFrmMain.N60Click(Sender: TObject);
+begin
+  LoadDll('KCXX.dll','pzbkcyj');                         //织布库存预警
+end;
+
+//================================订单信息管理======================================
+
+procedure TFrmMain.N21Click(Sender: TObject);
+begin
+  LoadDll('DDGL.dll','pbddlr');                         //棉布订单信息录入
+end;
+
+procedure TFrmMain.N36Click(Sender: TObject);
+begin
+  LoadDll('DDGL.dll','pgsdsh');                        //购纱单信息录入
+end;
+
+procedure TFrmMain.N31Click(Sender: TObject);
+begin
+  LoadDll('DDGL.dll','pbddsh');                          //棉布订单信息审核
+end;
+
+procedure TFrmMain.N35Click(Sender: TObject);
+begin
+  LoadDll('DDGL.dll','pbddxxzz');                        //棉布订单信息追踪
+end;
+
+procedure TFrmMain.N48Click(Sender: TObject);
+begin
+  LoadDll('DDGL.dll','pzfpzfgdsh');                        //自纺品种翻改单
+end;
+
+//================================机台信息管理======================================
+
+procedure TFrmMain.N47Click(Sender: TObject);
+begin
+  LoadDll('JTXX.dll','pbjbg');                        //织布分场布机报告信息
+end;
+
+procedure TFrmMain.N44Click(Sender: TObject);
+begin
+  LoadDll('JTXX.dll','pbjkt');                        //织布分场布机开台信息
+end;
+
+procedure TFrmMain.N45Click(Sender: TObject);
+begin
+  LoadDll('FSJKTXX.dll','pfsjkt');                        //纺纱分场布机开台信息
+end;
+
+
+procedure TFrmMain.N42Click(Sender: TObject);
+begin
+  LoadDll('JTXX.dll','pbjfb');                        //织布分场布机分布信息
+end;
+
+procedure TFrmMain.N32Click(Sender: TObject);
+begin
+  LoadDll('FSCLRB.dll','psjclrb');                        //纺纱分场纱机报告信息
+end;
+
+procedure TFrmMain.N50Click(Sender: TObject);
+begin
+ LoadDll('JTXX.dll','pcjddgl');
+end;
+
+//================================生产调度监控======================================
+procedure TFrmMain.N26Click(Sender: TObject);
+begin
+  LoadDll('DDKZ.dll','pbddjd');                        //织布生产动态信息
+end;
+
+procedure TFrmMain.N25Click(Sender: TObject);
+begin
+  LoadDll('sscdtxx.dll','psscdt');                        //纺纱生产动态信息
+end;
+
+procedure TFrmMain.N38Click(Sender: TObject);
+begin
+  LoadDll('DDKZ.dll','pbjhdd');                        //织布生产计划调度信息
+end;
+
+procedure TFrmMain.N39Click(Sender: TObject);
+begin
+   LoadDll('sddtz.dll','psscdd');                        //纺纱生产计划调度信息
+end;
+
+//================================生产计划管理======================================
+procedure TFrmMain.N18Click(Sender: TObject);
+begin
+  LoadDll('SCJH.dll','pbpzfg');                         //棉布品种翻改信息
+end;
+
+procedure TFrmMain.N19Click(Sender: TObject);
+begin
+  LoadDll('spzfgxx.dll','pspzfg');                        //棉纱品种翻改信息
+end;
+
+procedure TFrmMain.N22Click(Sender: TObject);
+begin
+  LoadDll('SCJH.dll','pbscjh');                        //棉布生产计划信息
+end;
+
+procedure TFrmMain.N29Click(Sender: TObject);
+begin
+  LoadDll('sjh.dll','psscjh');                        //棉纱生产计划信息
+end;
+
+procedure TFrmMain.N37Click(Sender: TObject);
+begin
+  LoadDll('sjgy.dll','psjgyfg');                       //纱机工艺翻改
+end;
+
+procedure TFrmMain.N43Click(Sender: TObject);
+begin
+  //LoadDll('JTXX.dll','pbjfb');                        //纺纱分场布机分布信息
+end;
+
+procedure TFrmMain.RzGroup4Items8Click(Sender: TObject);
+begin
+LoadDll('JCXX.dll','pjsgl');
+end;
+
+procedure TFrmMain.RzGroup4Items9Click(Sender: TObject);
+begin
+LoadDll('JCXX.dll','pwsgl');
+end;
+
+procedure TFrmMain.RzGroup4Items10Click(Sender: TObject);
+begin
+LoadDll('JCXX.dll','pzjl');
+end;
+
+procedure TFrmMain.tmr1Timer(Sender: TObject);
+begin
+ { if (bmmc='营销部') and (zw='织部营销业务员') then
+  begin
+    with DM.qrytx do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Add('select * from V_棉布订单审核表状态跟踪 where (销售部审核状态=0 and 作废状态=0 and not (销售部审核人 is null)) or (财务部审核状态=0 and 作废状态=0 and not(财务部审核人 is null)) or (织部工程师审核状态=0  and 作废状态=0 and not(织部工程师审核人 is null))');
+      SQL.Add('or (物流采购部审核状态=0 and 作废状态=0 and not (物流采购部审核人 is null)) or (公司领导审核状态=0 and 作废状态=0 and not(公司领导审核人 is null)) or (公司领导审批状态=0 and 作废状态=0 and not(公司领导审批人 is null))');
+      Open;
+    end;
+   if not DM.qrytx.Eof then
+    begin
+      FlashWindow(FrmMain.Handle,flash);
+    end;
+  end; }
+end;
+
+end.
+

@@ -1,0 +1,229 @@
+unit zjl;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters,
+  cxStyles, dxSkinsCore, dxSkinsDefaultPainters, dxSkinscxPCPainter,
+  cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, DB, cxDBData,
+  cxLabel, cxTextEdit, cxBlobEdit, StdCtrls, Mask, RzEdit, RzButton,
+  RzLabel, ExtCtrls, RzPanel, cxGridLevel, cxGridCustomTableView,
+  cxGridTableView, cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid,
+  ImgList;
+
+type
+  TFrmzjl = class(TForm)
+    cxstylrpstry1: TcxStyleRepository;
+    cxstyl1: TcxStyle;
+    cxstyl2: TcxStyle;
+    cxstyl3: TcxStyle;
+    cxstyl4: TcxStyle;
+    cxstyl5: TcxStyle;
+    cxstyl6: TcxStyle;
+    cxstyl7: TcxStyle;
+    cxstyl8: TcxStyle;
+    cxstyl9: TcxStyle;
+    cxstyl10: TcxStyle;
+    cxstyl11: TcxStyle;
+    cxGrid1: TcxGrid;
+    cxgrdbtblvwGrid1DBTableView1: TcxGridDBTableView;
+    cxgrdbclmnGrid1DBTableView1Column1: TcxGridDBColumn;
+    cxgrdbclmnGrid1DBTableView1Column2: TcxGridDBColumn;
+    cxgrdlvlGrid1Level1: TcxGridLevel;
+    RzGroupBox1: TRzGroupBox;
+    lblDailyWarpingAmount: TRzLabel;
+    lblDailyMachineWeight: TRzLabel;
+    btnAdd: TRzToolButton;
+    btnSave: TRzToolButton;
+    btnCancel: TRzToolButton;
+    btnDelete: TRzToolButton;
+    btn6: TRzToolButton;
+    edt3: TRzEdit;
+    edt4: TRzEdit;
+    cxgrdbclmnGrid1DBTableView1Column3: TcxGridDBColumn;
+    cxgrdbclmnGrid1DBTableView1Column4: TcxGridDBColumn;
+    cxgrdbclmnGrid1DBTableView1Column5: TcxGridDBColumn;
+    cxgrdbclmnGrid1DBTableView1Column6: TcxGridDBColumn;
+    cxgrdbclmnGrid1DBTableView1Column7: TcxGridDBColumn;
+    cxgrdbclmnGrid1DBTableView1Column8: TcxGridDBColumn;
+    cxgrdbclmnGrid1DBTableView1Column9: TcxGridDBColumn;
+    cxgrdbclmnGrid1DBTableView1Column10: TcxGridDBColumn;
+    cxgrdbclmnGrid1DBTableView1Column11: TcxGridDBColumn;
+    cxmglst1: TcxImageList;
+    btn5: TRzToolButton;
+    lbl1: TRzLabel;
+    procedure btnAddClick(Sender: TObject);
+    procedure btn6Click(Sender: TObject);
+    procedure btnSaveClick(Sender: TObject);
+    procedure btn5Click(Sender: TObject);
+    procedure btnCancelClick(Sender: TObject);
+    procedure btnDeleteClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frmzjl: TFrmzjl;
+  procedure pzjl(AHandle:THandle);stdcall;
+
+implementation
+
+uses UDM;
+{$R *.dfm}
+
+procedure pzjl(AHandle:THandle);stdcall;
+begin
+  Application.Handle:=AHandle;
+  Frmzjl:=TFrmzjl.Create(Application);
+  try
+    Frmzjl.ShowModal;
+  finally
+    TFrmzjl(Frmzjl).Free;
+  end;
+end;
+procedure TFrmzjl.btnAddClick(Sender: TObject);
+begin
+RzGroupBox1.Tag:=1;
+edt3.Text:=DM.qryzzjl.FieldByName('品名').AsString;
+edt4.Enabled:=True;
+btnSave.Enabled:=True;
+btnCancel.Enabled:=True;
+btnAdd.Enabled:=False;
+btn5.Enabled:=False;
+btnDelete.Enabled:=False;
+end;
+
+procedure TFrmzjl.btn6Click(Sender: TObject);
+begin
+Self.Close;
+end;
+
+procedure TFrmzjl.btnSaveClick(Sender: TObject);
+begin
+if RzGroupBox1.Tag=1 then
+ begin
+  try
+   with DM.qry7 do
+   begin
+    Close;
+    SQL.Clear;
+    SQL.Add('select * from 整经量  where 品名=:pm');
+    Parameters.ParamByName('pm').Value:=DM.qryzzjl.FieldByName('品名').AsString;
+    Open;
+   end;
+   if DM.qry7.Eof then
+   begin
+    with DM.qry6 do
+    begin
+     Close;
+     SQL.Clear;
+     SQL.Add('insert into 整经量(品名,总整经量)');
+     SQL.Add('values(:pm,:zzjl)');
+     Parameters.ParamByName('pm').Value:=edt3.Text;
+     Parameters.ParamByName('zzjl').Value:=edt4.Text;
+     ExecSQL;
+    end;
+    with DM.qryzzjl do
+    begin
+     Close;
+     Open;
+    end;
+    Application.MessageBox('保存成功！','提示',MB_OK+MB_ICONINFORMATION);
+   end
+   else
+   begin
+    Application.MessageBox('该品种的总整经量已添加，如需重新添加请将原有信息删除！','提示',MB_OK+MB_ICONINFORMATION);
+   end;
+  except
+   Application.MessageBox('保存失败，请核查原因！','提示',MB_OK+MB_ICONERROR);
+  end;
+ end;
+if RzGroupBox1.Tag=2 then
+ begin
+  try
+   with DM.qry6 do
+    begin
+     Close;
+     SQL.Clear;
+     SQL.Add('update 整经量 set 总整经量=:zzjl where 品名=:pm');
+     Parameters.ParamByName('zzjl').Value:=edt4.Text;
+     Parameters.ParamByName('pm').Value:=DM.qryzzjl.FieldByName('品名').AsInteger;
+     ExecSQL;
+     Application.MessageBox('更新成功！','提示',MB_OK+MB_ICONINFORMATION);
+    end;
+    with DM.qryzzjl do
+    begin
+     Close;
+     Open;
+    end;
+  except
+     Application.MessageBox('更新失败，请核查原因！','提示',MB_OK+MB_ICONERROR);
+  end;
+ end;
+  btnCancel.Click;
+end;
+procedure TFrmzjl.btn5Click(Sender: TObject);
+begin
+RzGroupBox1.Tag:=2;
+edt3.Text:=DM.qryzzjl.FieldByName('品名').AsString;
+edt4.Enabled:=True;
+edt4.Text:=DM.qryzzjl.FieldByName('总整经量').AsString;
+btnSave.Enabled:=True;
+btnCancel.Enabled:=True;
+btnAdd.Enabled:=False;
+btn5.Enabled:=False;
+btnDelete.Enabled:=False;
+end;
+
+procedure TFrmzjl.btnCancelClick(Sender: TObject);
+begin
+edt3.Text:='';
+edt3.Enabled:=False;
+edt4.Text:='';
+edt4.Enabled:=False;
+btnSave.Enabled:=False;
+btnCancel.Enabled:=False;
+btnAdd.Enabled:=True;
+btn5.Enabled:=True;
+btnDelete.Enabled:=True;
+end;
+
+procedure TFrmzjl.btnDeleteClick(Sender: TObject);
+begin
+    if Application.MessageBox('确定删除该品种的总整经量信息吗?','提示',MB_YESNO+MB_ICONINFORMATION)=ID_YES then
+  begin
+     try
+      with DM.qry6 do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Add('delete from 整经量 where 品名=:pm');
+        Parameters.ParamByName('pm').Value:=DM.qryzzjl.FieldByName('品名').AsString;
+        ExecSQL;
+      end;
+      Application.MessageBox('删除成功！','提示',MB_OK+MB_ICONINFORMATION);
+        with DM.qryzzjl do
+        begin
+          Close;
+          Open;
+        end;
+     except
+       Application.MessageBox('删除失败，请核查原因！','提示',MB_OK+MB_ICONERROR);
+     end;
+  end;
+end;
+
+procedure TFrmzjl.FormShow(Sender: TObject);
+begin
+ with DM.qryzzjl do
+   begin
+    Close;
+    Open;
+   end;
+end;
+
+end.

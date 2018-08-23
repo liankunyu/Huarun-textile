@@ -1,0 +1,176 @@
+unit Formimage;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ImgList, cxGraphics, RzButton, StdCtrls, RzEdit, Mask, RzLabel,
+  RzPanel, ExtCtrls, DBCtrls, RzDBEdit, RzLstBox, RzTabs, frxClass,
+  frxDBSet,DB, ADODB,ComCtrls,JPEG, frxBDEComponents;
+
+type
+  TFrmimage = class(TForm)
+    dlgOpen1: TOpenDialog;
+    btn1: TRzToolButton;
+    btn3: TRzToolButton;
+    cxImageList1: TcxImageList;
+    cxmglst1: TcxImageList;
+    frxBDEComponents1: TfrxBDEComponents;
+    edtOrderID: TRzEdit;
+    lbl1: TLabel;
+    btn2: TRzToolButton;
+    dbimg1: TDBImage;
+    procedure btn1Click(Sender: TObject);
+    procedure btn3Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure btn2Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frmimage: TFrmimage;
+
+implementation
+uses UDM,CxGridDBBandedTableView, bddmx;
+
+{$R *.dfm}
+
+procedure TFrmimage.btn1Click(Sender: TObject);
+var
+ bmp1:TBitmap;
+ jpg1:TJpegImage;
+begin
+  dlgOpen1.DefaultExt:=GraphicExtension(TJpegimage);
+
+  if dlgOpen1.Execute then
+
+     begin
+
+     bmp1:=TBitmap.Create;
+
+     jpg1:=TJpegImage.Create;
+
+     try
+
+     jpg1.LoadFromFile(dlgOpen1.FileName);
+
+     bmp1.Assign(jpg1);
+
+     dbimg1.Picture.Bitmap.Assign(bmp1);
+
+     finally
+
+       jpg1.Free;
+
+       bmp1.Free;
+
+     end;
+
+    end;
+end;
+
+procedure TFrmimage.btn3Click(Sender: TObject);
+begin
+  with DM.qryBUnApprovedOrder do
+ begin
+  try
+        Post;
+        Application.MessageBox('上传成功！','提示',MB_OK+MB_ICONINFORMATION);
+  except
+       Application.MessageBox('上传失败，请核查原因！','提示',MB_OK+MB_ICONERROR);
+  end;
+    Self.Close;
+ end;
+end;
+
+procedure TFrmimage.FormShow(Sender: TObject);
+begin
+if Self.Tag=0 then
+ begin
+   edtOrderID.Text:=DM.qryBUnApprovedOrder.FieldByName('订单号').Value;
+   DM.qryBUnApprovedOrder.Edit;
+ end;
+if Self.Tag=1 then
+ begin
+  edtOrderID.Visible:=False;
+  lbl1.Visible:=False;
+  btn1.Visible:=False;
+  btn3.Visible:=False;
+  dbimg1.datasource:=DM.dsBUnApprovedOrder;
+  Frmimage.Caption:='查看合同';
+ end;
+
+if Self.Tag=2 then
+ begin
+  edtOrderID.Visible:=False;
+  lbl1.Visible:=False;
+  btn1.Visible:=False;
+  btn3.Visible:=False;
+  dbimg1.datasource:=DM.dsBOrderExamine;
+  Frmimage.Caption:='查看合同';
+ end;
+if Self.Tag=3 then
+ begin
+  edtOrderID.Visible:=False;
+  lbl1.Visible:=False;
+  btn1.Visible:=False;
+  btn3.Visible:=False;
+  dbimg1.datasource:=DM.DataSourcecw;
+  Frmimage.Caption:='查看合同';
+ end;
+if Self.Tag=4 then
+ begin
+  edtOrderID.Visible:=False;
+  lbl1.Visible:=False;
+  btn1.Visible:=False;
+  btn3.Visible:=False;
+  dbimg1.datasource:=DM.DataSourcezbgc;
+  Frmimage.Caption:='查看合同';
+ end;
+if Self.Tag=5 then
+ begin
+  edtOrderID.Visible:=False;
+  lbl1.Visible:=False;
+  btn1.Visible:=False;
+  btn3.Visible:=False;
+  dbimg1.datasource:=DM.DataSourcewlcg;
+  Frmimage.Caption:='查看合同';
+ end;
+if Self.Tag=6 then
+ begin
+  edtOrderID.Visible:=False;
+  lbl1.Visible:=False;
+  btn1.Visible:=False;
+  btn3.Visible:=False;
+  dbimg1.datasource:=DM.DataSourceldsh;
+  Frmimage.Caption:='查看合同';
+ end;
+if Self.Tag=7 then
+ begin
+  edtOrderID.Visible:=False;
+  lbl1.Visible:=False;
+  btn1.Visible:=False;
+  btn3.Visible:=False;
+  dbimg1.datasource:=DM.DataSourceldsp;
+  Frmimage.Caption:='查看合同';
+ end;
+if Self.Tag=8 then
+ begin
+  edtOrderID.Visible:=False;
+  lbl1.Visible:=False;
+  btn1.Visible:=False;
+  btn3.Visible:=False;
+  dbimg1.datasource:=DM.dsBApprovedOrder;
+  Frmimage.Caption:='查看合同';
+ end;
+end;
+
+procedure TFrmimage.btn2Click(Sender: TObject);
+begin
+Self.Close;
+end;
+
+end.
