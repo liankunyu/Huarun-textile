@@ -9,7 +9,6 @@ uses
 
 type
   TFrmBDDXXCZ = class(TForm)
-    cxmglst1: TcxImageList;
     rzpnl1: TRzPanel;
     lblSearchKey: TRzLabel;
     btnSearch: TRzToolButton;
@@ -18,6 +17,7 @@ type
     edtSearchKey: TRzEdit;
     lblSearchItems: TRzLabel;
     cbbSearchItems: TRzComboBox;
+    ImageList1: TImageList;
     procedure btnExitClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnSearchClick(Sender: TObject);

@@ -101,7 +101,7 @@ DebugSourceDirs=
 UsePackages=0
 [Parameters]
 RunParams=
-HostApplication=E:\华润纺织Win10-5-5\华润纺织Win10-5-5\华润计划调度\Source\订单信息管理\JHDD.exe
+HostApplication=E:\华润纺织\华润纺织Win10-8-2\华润计划调度\Source\订单信息管理\JHDD.exe
 Launcher=
 UseLauncher=0
 DebugCWD=

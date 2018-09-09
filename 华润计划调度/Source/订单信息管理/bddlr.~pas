@@ -40,7 +40,6 @@ type
     cxgrdbtblvwUnApprovedOrder: TcxGridDBTableView;
     frxdbdtstUnApprovedOrder: TfrxDBDataset;
     btnQuery: TRzToolButton;
-    cxImageList1: TcxImageList;
     btnAdd: TRzToolButton;
     btnModify: TRzToolButton;
     btnPrint: TRzToolButton;
@@ -101,6 +100,7 @@ type
     cxgrdbclmnUnApprovedOrderColumn6: TcxGridDBColumn;
     btn2: TRzToolButton;
     cxgrdbclmnUnApprovedOrderColumn7: TcxGridDBColumn;
+    ImageList1: TImageList;
     procedure rzbtbtnExitClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure frxrprtApprovedOrderGetValue(const VarName: String;

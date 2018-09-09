@@ -32,7 +32,6 @@ type
     cxStyle4: TcxStyle;
     cxStyle3: TcxStyle;
     cxstylWarning: TcxStyle;
-    cxImageList1: TcxImageList;
     rzrdgrpSelect: TRzRadioGroup;
     btndelete: TRzToolButton;
     cxgrdOrder: TcxGrid;
@@ -103,6 +102,7 @@ type
     cxgrdbclmnApprovedOrderColumn9: TcxGridDBColumn;
     cxgrdbclmnApprovedOrderColumn10: TcxGridDBColumn;
     dlgSave1: TSaveDialog;
+    ImageList1: TImageList;
     procedure btnQueryClick(Sender: TObject);
     procedure btnExitClick(Sender: TObject);
     procedure rzrdgrpSelectClick(Sender: TObject);
